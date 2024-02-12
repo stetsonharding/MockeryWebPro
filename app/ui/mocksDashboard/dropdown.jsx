@@ -1,8 +1,8 @@
 "use-client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import WorkspaceForm from "./WorkspaceForm";
 import {
-  CreateWorkspace,
+  CreateWorkspaceBtn,
   ViewWorkspacesBtn,
 } from "@app/ui/mocksDashboard/buttons";
 import { Workspaces } from "@app/ui/mocksDashboard/workspaces";
@@ -15,6 +15,7 @@ export default function Dropdown({
   const [isDropdownShown, setIsDropdownShown] = useState(false);
   const [isCreatingWorkspace, setIsCreatingWorkspace] = useState(false);
   const [editedInputValues, setEditedInputValues] = useState(null);
+  const dropdownRef = useRef();
 
   //Handles the POST request by adding a new workspace
   //handes the PUT request by finding the workspace by id that needs to be updated
@@ -30,6 +31,25 @@ export default function Dropdown({
     setIsCreatingWorkspace(false);
   };
 
+
+//Function to close dropdown if user clicks outside of dropdown box
+  const handleClickOutside = (event) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target)
+    ) {
+     setIsDropdownShown(false)
+    }
+  }
+
+//Keeps track of open/close dropdown box
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+  },[])
+
   return (
     <div>
       <ViewWorkspacesBtn
@@ -37,7 +57,7 @@ export default function Dropdown({
         isDropdownShown={isDropdownShown}
       />
       {isDropdownShown && (
-        <div className="relative mt-2 w-80 rounded-sm bg-gray-50 shadow-md ring-black ring-opacity-5 focus:outline-none overflow-auto">
+        <div ref={dropdownRef} className="relative mt-2 w-80 rounded-sm bg-gray-50 shadow-md ring-black ring-opacity-5 focus:outline-none overflow-auto">
           <Workspaces
             workSpacesList={workSpacesList}
             setWorkSpacesList={setWorkSpacesList}
@@ -48,7 +68,7 @@ export default function Dropdown({
 
           {/* Show create workspace button if form is not showing - hide create workspace button if form is showing */}
           {isCreatingWorkspace === false ? (
-            <CreateWorkspace
+            <CreateWorkspaceBtn
               setIsCreatingWorkspace={setIsCreatingWorkspace}
               isCreatingWorkspace={isCreatingWorkspace}
             />

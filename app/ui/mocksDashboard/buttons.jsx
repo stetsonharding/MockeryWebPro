@@ -69,7 +69,7 @@ export function ViewWorkspacesBtn({ setIsDropdownShown, isDropdownShown }) {
   );
 }
 
-export function CreateWorkspace({ setIsCreatingWorkspace}) {
+export function CreateWorkspaceBtn({ setIsCreatingWorkspace}) {
   return (
     <div className="w-full flex justify-center my-5">
       <button
