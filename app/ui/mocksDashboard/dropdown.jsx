@@ -10,7 +10,8 @@ import { Workspaces } from "@app/ui/mocksDashboard/workspaces";
 export default function Dropdown({
   workSpacesList,
   setWorkSpacesList,
-  getWorkspaceMocksList
+  getWorkspaceMocksList,
+  workspaceName
 }) {
   const [isDropdownShown, setIsDropdownShown] = useState(false);
   const [isCreatingWorkspace, setIsCreatingWorkspace] = useState(false);
@@ -55,6 +56,7 @@ export default function Dropdown({
       <ViewWorkspacesBtn
         setIsDropdownShown={setIsDropdownShown}
         isDropdownShown={isDropdownShown}
+        workspaceName={workspaceName}
       />
       {isDropdownShown && (
         <div ref={dropdownRef} className="relative mt-2 w-80 rounded-sm bg-gray-50 shadow-md ring-black ring-opacity-5 focus:outline-none overflow-auto">

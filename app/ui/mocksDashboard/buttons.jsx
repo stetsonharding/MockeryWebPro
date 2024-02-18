@@ -46,13 +46,14 @@ export function DeleteMock({ id, token, setMocksList, selectedWorkspaceId }) {
   );
 }
 
-export function ViewWorkspacesBtn({ setIsDropdownShown, isDropdownShown }) {
+export function ViewWorkspacesBtn({ setIsDropdownShown, isDropdownShown, workspaceName }) {
+
   return (
     <div
       onClick={() => setIsDropdownShown(!isDropdownShown)}
       className="inline-flex w-52 justify-between items-center pl-2 rounded-md bg-white tracking-wide text-md  font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-200"
     >
-      Work Spaces
+     {workspaceName}
       <svg
         className="h-9  text-light-theme-green"
         viewBox="0 0 22 22"

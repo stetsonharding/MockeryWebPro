@@ -51,7 +51,7 @@ export function Workspaces({
   return workSpacesList?.map((workspace) => (
     <div
       key={workspace.id}
-      onClick={() => getWorkspaceMocksList(workspace.id)}
+      onClick={() => getWorkspaceMocksList(workspace)}
       className="cursor-pointer pl-1 mb-1 hover:bg-gray-200 rounded-md"
     >
       <div className="flex justify-between items-center px-2 py-2">
