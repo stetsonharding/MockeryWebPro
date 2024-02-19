@@ -2,8 +2,7 @@ name: Docker
 
 on:
   push:
-    branches:
-      - main  # Change this to match your branch name
+    tags: ["v*.*.*"]
 
 jobs:
   build:
@@ -22,4 +21,19 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.ACR_ENDPOINT }}/mockerywebpro:latest
+          tags: ${{ secrets.ACR_ENDPOINT }}/mockeryWebPro:latest
+
+  deploy:
+    name: Deploy to Azure Web App
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: mockerywebpro
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
