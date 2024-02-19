@@ -19,6 +19,8 @@ export default function Page() {
   const [workSpacesList, setWorkSpacesList] = useState([]);
   //State to store selected workspace Id
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState("");
+  //
+  const [workspaceName, setWorkspaceName] = useState("")
 
   //user session
   const { data: session, status } = useSession();
@@ -33,12 +35,13 @@ export default function Page() {
 
 
   // //Function to get the list of mocks from a workspace.
-  const getWorkspaceMocksList = async (workSpaceId) => {
+  const getWorkspaceMocksList = async (workSpace) => {
     // navigateToMocksDashboard(workSpaceId);
     // //store workspace id that the user selected for the DELETE mock api call.
-    setSelectedWorkspaceId(workSpaceId);
+    setSelectedWorkspaceId(workSpace.id);
+     setWorkspaceName(workSpace.name)
     const token = session?.accessToken;
-    const workspaceMocksUrl = `/api/workspaces/${workSpaceId}/mocks`;
+    const workspaceMocksUrl = `/api/workspaces/${workSpace.id}/mocks`;
     // Headers
     const options = {
       method: "GET",
@@ -80,7 +83,7 @@ export default function Page() {
         if (workspaceData) {
           setWorkSpacesList(workspaceData);
           //TODO: This will need to be the users selected workspace instead of the 1st workspace on the array of workspaces.
-          getWorkspaceMocksList(workspaceData[0].id);
+          getWorkspaceMocksList(workspaceData[0]);
         }
       } catch (error) {
         console.error(error.message);
@@ -106,6 +109,8 @@ export default function Page() {
           workSpacesList={workSpacesList}
           setWorkSpacesList={setWorkSpacesList}
           getWorkspaceMocksList={getWorkspaceMocksList}
+          workspaceName={workspaceName}
+        
         />
       </div>
       {status === "authenticated" && (
