@@ -36,6 +36,8 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Pull Docker image
+        run: docker pull ${{ secrets.ACR_ENDPOINT }}/mockerywebpro:latest
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
