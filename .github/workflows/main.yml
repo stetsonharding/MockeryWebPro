@@ -1,8 +1,12 @@
-name: Docker
+name: mockerywebpro-deploy
 
 on:
-  push:
-    tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      input:
+        description: "Test"
+        required: false
+        default: "World"
 
 jobs:
   build:
