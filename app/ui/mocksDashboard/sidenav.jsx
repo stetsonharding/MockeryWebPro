@@ -1,23 +1,15 @@
 'use client'
-
 import Link from 'next/link';
-// import NavLinks from '@/app/ui/dashboard/nav-links';
 import NavLinks from './nav-links';
-
-// import { PowerIcon } from '@heroicons/react/24/outline';
-
-import { signOut, useSession, signIn } from "next-auth/react";
-
+import { signOut } from "next-auth/react";
 import MockeryLogo from '../mockery-logo';
 
 export default function SideNav() {
 
 
-    const { data, status } = useSession();
-
   return (
     <>
-    {status === "authenticated" ?   <div className="flex h-full flex-col px-3 py-4 md:px-2">
+     <div className="flex h-full flex-col px-3 py-4 md:px-2">
       <Link
         className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
         href="/"
@@ -36,7 +28,7 @@ export default function SideNav() {
           </button>
         </form>
       </div>
-    </div> : null }
+    </div> 
   
     
     </>

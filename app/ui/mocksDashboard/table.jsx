@@ -3,6 +3,8 @@ import { UpdateMock, DeleteMock } from "./buttons";
 import { useSession } from "next-auth/react";
 
 export default function MocksTable({mocksToRender, setMocksList, selectedWorkspaceId}) {
+
+  console.log(mocksToRender)
   const {data: session} = useSession();
   return (
     <div className="mt-6 flow-root">
