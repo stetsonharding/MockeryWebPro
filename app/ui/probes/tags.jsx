@@ -20,6 +20,7 @@ export default function ProbeTags({ probesTag, setProbesTag, setProbesList }) {
       };
       const url = `/api/probes`;
       try {
+   
         const probesPromise = await fetch(url, options);
         const probesData = await probesPromise.json();
         setProbesTag(probesData);

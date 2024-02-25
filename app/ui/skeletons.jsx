@@ -43,7 +43,7 @@ export function TableRowSkeleton() {
 
 
 
-export function InvoicesTableSkeleton() {
+export function MocksTableSkeleton() {
     return (
       <div className={`${shimmer} mt-6 flow-root`} >
 

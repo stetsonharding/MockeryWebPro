@@ -8,7 +8,7 @@ import Dropdown from "@app/ui/mocksDashboard/dropdown";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Suspense } from "react";
-import { InvoicesTableSkeleton } from "@app/ui/skeletons";
+import { MocksTableSkeleton } from "@app/ui/skeletons";
 
 export default function Page() {
   const router = useRouter();
@@ -22,6 +22,8 @@ export default function Page() {
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState("");
   //State to store users workspace name selected
   const [workspaceName, setWorkspaceName] = useState("");
+  // Loading state
+  const [loading, setLoading] = useState(true);
 
   //user session
   const { data: session, status } = useSession();
@@ -63,13 +65,15 @@ export default function Page() {
 
   useEffect(() => {
     const token = session?.accessToken;
-  
+
     const fetchData = async () => {
       if (!token) return;
-  
+
       const workspacesUrl = "/api/workspaces";
-      const workspaceMocksUrls = workSpacesList.map(workspace => `/api/workspaces/${workspace.id}/mocks`);
-  
+      const workspaceMocksUrls = workSpacesList.map(
+        (workspace) => `/api/workspaces/${workspace.id}/mocks`
+      );
+
       const workspacePromise = fetch(workspacesUrl, {
         method: "GET",
         headers: {
@@ -77,20 +81,28 @@ export default function Page() {
           Authorization: `Bearer ${token}`,
         },
       });
-  
-      const mockPromises = workspaceMocksUrls.map(url => fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }));
-  
+
+      const mockPromises = workspaceMocksUrls.map((url) =>
+        fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      );
+
       try {
-        const [workspaceResponse, ...mockResponses] = await Promise.all([workspacePromise, ...mockPromises]);
+        const [workspaceResponse, ...mockResponses] = await Promise.all([
+          workspacePromise,
+          ...mockPromises,
+        ]);
         const workspaceData = await workspaceResponse.json();
-        const mocksData = await Promise.all(mockResponses.map(response => response.json()));
-  
+        const mocksData = await Promise.all(
+          mockResponses.map((response) => response.json())
+        );
+        setLoading(false); // Data fetching complete
+
         if (workspaceData) {
           setWorkSpacesList(workspaceData);
           getWorkspaceMocksList(workspaceData[0]);
@@ -100,7 +112,7 @@ export default function Page() {
         console.error(error.message);
       }
     };
-  
+
     if (session?.accessToken) {
       fetchData();
     }
@@ -129,12 +141,16 @@ export default function Page() {
       </div>
 
       {status === "authenticated" && (
-        <Suspense fallback={<InvoicesTableSkeleton />}>
-          <MocksTable
-            mocksToRender={mocksToRender}
-            setMocksList={setMocksList}
-            selectedWorkspaceId={selectedWorkspaceId}
-          />
+        <Suspense fallback={<MocksTableSkeleton />}>
+          {loading ? (
+            <MocksTableSkeleton /> // Show skeleton when loading
+          ) : (
+            <MocksTable
+              mocksToRender={mocksToRender}
+              setMocksList={setMocksList}
+              selectedWorkspaceId={selectedWorkspaceId}
+            />
+          )}
         </Suspense>
       )}
     </div>
