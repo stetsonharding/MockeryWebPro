@@ -21,6 +21,12 @@ jobs:
           registry: ${{ secrets.ACR_ENDPOINT }}
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
+      - name: Set up build number
+        id: vars
+        run: echo ::set-output name=BUILD_NUMBER::$(echo $GITHUB_RUN_NUMBER)
+      - name: Generate random tag
+        id: random_tag
+        run: echo ::set-output name=RANDOM_TAG::$(echo $(($(date +%s%N) % 10000))-${{ steps.vars.outputs.BUILD_NUMBER }}-${RANDOM})
       - name: Build & Push
         uses: docker/build-push-action@v2
         with:
@@ -45,5 +51,10 @@ jobs:
       with:
         app-name: mockery-web-pro-staging
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-
-
+        env:
+          NEXT_PUBLIC_AZURE_AD_B2C_TENANT_NAME: ${{ secrets.NEXT_PUBLIC_AZURE_AD_B2C_TENANT_NAME }}
+          NEXT_PUBLIC_AZURE_AD_B2C_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_AZURE_AD_B2C_CLIENT_ID }}
+          NEXT_PUBLIC_AZURE_AD_B2C_CLIENT_SECRET: ${{ secrets.NEXT_PUBLIC_AZURE_AD_B2C_CLIENT_SECRET }}
+          NEXT_PUBLIC_AZURE_AD_B2C_PRIMARY_USER_FLOW: ${{ secrets.NEXT_PUBLIC_AZURE_AD_B2C_PRIMARY_USER_FLOW }}
+          NEXT_PUBLIC_MOCKERY_BASEURL: ${{ secrets.NEXT_PUBLIC_MOCKERY_BASEURL }} 
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
