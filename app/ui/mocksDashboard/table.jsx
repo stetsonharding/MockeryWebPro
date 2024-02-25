@@ -1,9 +1,11 @@
 import React from "react";
 import { UpdateMock, DeleteMock } from "./buttons";
 import { useSession } from "next-auth/react";
+import { lusitana } from '@/app/ui/fonts';
 
 export default function MocksTable({mocksToRender, setMocksList, selectedWorkspaceId}) {
   const {data: session} = useSession();
+  const headerClassName = "px-5 py-5 sm:pl-6";
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
@@ -33,28 +35,28 @@ export default function MocksTable({mocksToRender, setMocksList, selectedWorkspa
           </div>
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
-              <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+              <tr className={`${lusitana.className} `}>
+                <th scope="col" className={`${lusitana.className} ${headerClassName}`}>
                   Name
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className={`${lusitana.className} ${headerClassName}`}>
                   Host
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className={`${lusitana.className} ${headerClassName}`}>
                   Method
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className={`${lusitana.className} ${headerClassName}`}>
                   Endpoint
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col"className={`${lusitana.className} ${headerClassName}`}>
                   Description
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium">
+                <th scope="col" className={`${lusitana.className} ${headerClassName}`}>
                   Tag
                 </th>
-                <th scope="col" className="relative py-3 pl-6 pr-3">
+                {/* <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
-                </th>
+                </th> */}
               </tr>
             </thead>
             <tbody className="bg-white">

@@ -47,11 +47,13 @@ const deleteProbe = async () => {
 };
 
 
-
+console.log(probeToRender)
 
   return (
     <>
+    {/* Tags dropdown */}
       <ProbeTags probesTag={probesTag} setProbesTag={setProbesTag} setProbesList={setProbesList} />
+      {/* == */}
       <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
         <table className="hidden min-w-full text-gray-900 md:table">
           <thead className="rounded-lg text-left text-sm font-normal">
@@ -78,7 +80,7 @@ const deleteProbe = async () => {
           </thead>
           <tbody className="bg-white">
             {probesTag.length !== 0 && probeToRender.map((probe) =>
-              probe.endpoints.map((pro) => (
+              probe.endpoints.map((pro, index) => (
                 <tr
                   key={probe.id} // Assuming 'id' is a property of 'pro'
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"

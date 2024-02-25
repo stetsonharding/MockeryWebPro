@@ -7,9 +7,10 @@ import Dropdown from "@app/ui/mocksDashboard/dropdown";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Suspense } from "react";
+import { MocksTableSkeleton } from "@app/ui/skeletons";
 
 export default function Page() {
-
   const router = useRouter();
   //State to stock list of mocks
   const [mocksList, setMocksList] = useState([]);
@@ -19,8 +20,10 @@ export default function Page() {
   const [workSpacesList, setWorkSpacesList] = useState([]);
   //State to store selected workspace Id
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState("");
-  //
-  const [workspaceName, setWorkspaceName] = useState("")
+  //State to store users workspace name selected
+  const [workspaceName, setWorkspaceName] = useState("");
+  // Loading state
+  const [loading, setLoading] = useState(true);
 
   //user session
   const { data: session, status } = useSession();
@@ -28,18 +31,17 @@ export default function Page() {
   //TODO: Function to add the workspace id to the URL.
   //I need to get this workspace id from the url so after creating a mock
   //the user will view the correct workspace and not the first workspace on top of the array.
-  const navigateToMocksDashboard = (workspaceId) => {
-    router.push(`/mocksDashboard?id=${workspaceId}`);
-    setSelectedWorkspaceId(workspaceId);
-  };
-
+  // const navigateToMocksDashboard = (workspaceId) => {
+  //   router.push(`/mocksDashboard?id=${workspaceId}`);
+  //   setSelectedWorkspaceId(workspaceId);
+  // };
 
   // //Function to get the list of mocks from a workspace.
   const getWorkspaceMocksList = async (workSpace) => {
-    // navigateToMocksDashboard(workSpaceId);
     // //store workspace id that the user selected for the DELETE mock api call.
     setSelectedWorkspaceId(workSpace.id);
-     setWorkspaceName(workSpace.name)
+    //Set selected workspace name to show user
+    setWorkspaceName(workSpace.name);
     const token = session?.accessToken;
     const workspaceMocksUrl = `/api/workspaces/${workSpace.id}/mocks`;
     // Headers
@@ -53,7 +55,6 @@ export default function Page() {
     try {
       const mocksPromise = await fetch(workspaceMocksUrl, options);
       const mocksData = await mocksPromise.json();
-
       setMocksList(mocksData);
     } catch (error) {
       console.log(error.message);
@@ -63,34 +64,57 @@ export default function Page() {
   };
 
   useEffect(() => {
-    console.log("hook ran");
     const token = session?.accessToken;
-    const getWorkspaces = async () => {
+
+    const fetchData = async () => {
       if (!token) return;
-      // Headers
-      const options = {
+
+      const workspacesUrl = "/api/workspaces";
+      const workspaceMocksUrls = workSpacesList.map(
+        (workspace) => `/api/workspaces/${workspace.id}/mocks`
+      );
+
+      const workspacePromise = fetch(workspacesUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-      };
-      const workspacesUrl = "/api/workspaces";
+      });
+
+      const mockPromises = workspaceMocksUrls.map((url) =>
+        fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      );
 
       try {
-        const workspacePromise = await fetch(workspacesUrl, options);
-        const workspaceData = await workspacePromise.json();
+        const [workspaceResponse, ...mockResponses] = await Promise.all([
+          workspacePromise,
+          ...mockPromises,
+        ]);
+        const workspaceData = await workspaceResponse.json();
+        const mocksData = await Promise.all(
+          mockResponses.map((response) => response.json())
+        );
+        setLoading(false); // Data fetching complete
+
         if (workspaceData) {
           setWorkSpacesList(workspaceData);
-          //TODO: This will need to be the users selected workspace instead of the 1st workspace on the array of workspaces.
           getWorkspaceMocksList(workspaceData[0]);
         }
+        setMocksList(mocksData);
       } catch (error) {
         console.error(error.message);
       }
     };
+
     if (session?.accessToken) {
-      getWorkspaces();
+      fetchData();
     }
   }, [session]);
 
@@ -102,23 +126,32 @@ export default function Page() {
       <div className="flex w-full items-center justify-between">
         <h1 className={`text-2xl`}>Created Mocks</h1>
       </div>
-      <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
-        <SearchMocks mocksList={mocksList} setFilteredMocks={setFilteredMocks}/>
+      <div className="mt-4 flex items-center justify-between gap-3 md:mt-8">
+        <SearchMocks
+          mocksList={mocksList}
+          setFilteredMocks={setFilteredMocks}
+        />
         <CreateMock selectedWorkspaceId={selectedWorkspaceId} />
         <Dropdown
           workSpacesList={workSpacesList}
           setWorkSpacesList={setWorkSpacesList}
           getWorkspaceMocksList={getWorkspaceMocksList}
           workspaceName={workspaceName}
-        
         />
       </div>
+
       {status === "authenticated" && (
-        <MocksTable
-          mocksToRender={mocksToRender}
-          setMocksList={setMocksList}
-          selectedWorkspaceId={selectedWorkspaceId}
-        />
+        <Suspense fallback={<MocksTableSkeleton />}>
+          {loading ? (
+            <MocksTableSkeleton /> // Show skeleton when loading
+          ) : (
+            <MocksTable
+              mocksToRender={mocksToRender}
+              setMocksList={setMocksList}
+              selectedWorkspaceId={selectedWorkspaceId}
+            />
+          )}
+        </Suspense>
       )}
     </div>
   );
