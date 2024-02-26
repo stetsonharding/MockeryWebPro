@@ -11,7 +11,9 @@ export default function Dropdown({
   workSpacesList,
   setWorkSpacesList,
   getWorkspaceMocksList,
-  workspaceName
+  workspaceName,
+  deleteWorkspaceAndMocks,
+  setWorkspaceName
 }) {
   const [isDropdownShown, setIsDropdownShown] = useState(false);
   const [isCreatingWorkspace, setIsCreatingWorkspace] = useState(false);
@@ -66,6 +68,7 @@ export default function Dropdown({
             setIsCreatingWorkspace={setIsCreatingWorkspace}
             setEditedInputValues={setEditedInputValues}
             getWorkspaceMocksList={getWorkspaceMocksList}
+            deleteWorkspaceAndMocks={deleteWorkspaceAndMocks}
           />
 
           {/* Show create workspace button if form is not showing - hide create workspace button if form is showing */}
@@ -76,6 +79,7 @@ export default function Dropdown({
             />
           ) : (
             <WorkspaceForm
+            setWorkspaceName={setWorkspaceName}
               mode={
                 isCreatingWorkspace === true && editedInputValues === null
                   ? "create"

@@ -28,6 +28,12 @@ export default function Page() {
   //user session
   const { data: session, status } = useSession();
 
+  //Function to remove workspace's mocks and workspace name user has selected
+  const deleteWorkspaceAndMocks = () => {
+    setWorkspaceName("");
+    setMocksList([]);
+  };
+
   //TODO: Function to add the workspace id to the URL.
   //I need to get this workspace id from the url so after creating a mock
   //the user will view the correct workspace and not the first workspace on top of the array.
@@ -137,6 +143,9 @@ export default function Page() {
           setWorkSpacesList={setWorkSpacesList}
           getWorkspaceMocksList={getWorkspaceMocksList}
           workspaceName={workspaceName}
+          setWorkspaceName={setWorkspaceName}
+          setMocksList={setMocksList}
+          deleteWorkspaceAndMocks={deleteWorkspaceAndMocks}
         />
       </div>
 

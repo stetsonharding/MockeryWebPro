@@ -1,18 +1,19 @@
 import Image from "next/image";
+import { lusitana } from '@/app/ui/fonts';
 
 export default function MockeryLogo() {
   return (
     <div
-      className="flex flex-row items-center leading-none text-white"
+      className="flex flex-row items-center leading-none text-white gap-1"
     >
       <Image
-          src="/assets/icons/MockeryLogoBG.png"
+          src="/assets/icons/mockeryLogo.png"
           alt="Mockery Logo"
-          width={50}
-          height={50}
+          width={79}
+          height={79}
           className="object-contain"
         />
-      <p className="text-[38px]">Mockery</p>
+      <p className={`${lusitana.className} text-[35px]`}>Mockery</p>
     </div>
   );
 }

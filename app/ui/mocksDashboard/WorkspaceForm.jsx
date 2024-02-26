@@ -8,7 +8,8 @@ function WorkspaceForm({
   initialData,
   onConfirm,
   setIsCreatingWorkspace,
-  setEditedInputValues
+  setEditedInputValues,
+  setWorkspaceName
 }) {
   const [workspaceInput, setWorkspaceInput] = useState({ name: "", description: "" });
   const { data:session } = useSession();
@@ -49,6 +50,8 @@ function WorkspaceForm({
       const res = await promise.json();
       console.log(res)
       onConfirm(res);
+      //Setting workspace name to updated workspace if edited.
+      setWorkspaceName(workspaceInput.name)
     } catch (error) {
       console.log(error.message);
     }

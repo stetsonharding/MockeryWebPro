@@ -6,7 +6,8 @@ export function Workspaces({
   setWorkSpacesList, 
   setIsCreatingWorkspace, 
   setEditedInputValues, 
-  getWorkspaceMocksList 
+  getWorkspaceMocksList,
+  deleteWorkspaceAndMocks
 }) {
 
   const { data: session } = useSession();
@@ -40,6 +41,7 @@ export function Workspaces({
         setWorkSpacesList((prevList) =>
           prevList.filter((workspace) => workspace.id !== id)
         );
+        deleteWorkspaceAndMocks();
       }
     } catch (error) {
       console.error("Error deleting workspace:", error);
