@@ -162,7 +162,7 @@ export default function Page() {
           setMocksList={setMocksList}
           selectedWorkspaceId={selectedWorkspaceId}
         />
-      ) : <div className={`${lusitana.className} w-full h-32 flex justify-center items-center font-bold`}><p>You have no mocks in this workspace.</p></div>
+      ) : <div className={`${lusitana.className} w-full h-32 flex justify-center items-center font-bold`}>{workspaceName === "" ? <p>Select a Workspace</p> : <p>You have no mocks in this workspace.</p>}</div>
     )}
   </Suspense>
 )}
