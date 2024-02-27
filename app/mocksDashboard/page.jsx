@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Suspense } from "react";
 import { MocksTableSkeleton } from "@app/ui/skeletons";
+import { lusitana } from '@/app/ui/fonts';
 
 export default function Page() {
   const router = useRouter();
@@ -150,18 +151,22 @@ export default function Page() {
       </div>
 
       {status === "authenticated" && (
-        <Suspense fallback={<MocksTableSkeleton />}>
-          {loading ? (
-            <MocksTableSkeleton /> // Show skeleton when loading
-          ) : (
-            <MocksTable
-              mocksToRender={mocksToRender}
-              setMocksList={setMocksList}
-              selectedWorkspaceId={selectedWorkspaceId}
-            />
-          )}
-        </Suspense>
-      )}
+  <Suspense fallback={<MocksTableSkeleton />}>
+    {loading ? (
+      <MocksTableSkeleton /> // Show skeleton when loading
+    ) : (
+      //Render mocks if they exist in workspace otherwise let the user know.
+      mocksToRender.length ? (
+        <MocksTable
+          mocksToRender={mocksToRender}
+          setMocksList={setMocksList}
+          selectedWorkspaceId={selectedWorkspaceId}
+        />
+      ) : <div className={`${lusitana.className} w-full h-32 flex justify-center items-center font-bold`}><p>You have no mocks in this workspace.</p></div>
+    )}
+  </Suspense>
+)}
+
     </div>
   );
 }
