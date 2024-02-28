@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Suspense } from "react";
 import { MocksTableSkeleton } from "@app/ui/skeletons";
+import { lusitana } from '@/app/ui/fonts';
 
 export default function Page() {
   const router = useRouter();
@@ -27,6 +28,12 @@ export default function Page() {
 
   //user session
   const { data: session, status } = useSession();
+
+  //Function to remove workspace's mocks and workspace name user has selected
+  const deleteWorkspaceAndMocks = () => {
+    setWorkspaceName("");
+    setMocksList([]);
+  };
 
   //TODO: Function to add the workspace id to the URL.
   //I need to get this workspace id from the url so after creating a mock
@@ -137,22 +144,29 @@ export default function Page() {
           setWorkSpacesList={setWorkSpacesList}
           getWorkspaceMocksList={getWorkspaceMocksList}
           workspaceName={workspaceName}
+          setWorkspaceName={setWorkspaceName}
+          setMocksList={setMocksList}
+          deleteWorkspaceAndMocks={deleteWorkspaceAndMocks}
         />
       </div>
 
       {status === "authenticated" && (
-        <Suspense fallback={<MocksTableSkeleton />}>
-          {loading ? (
-            <MocksTableSkeleton /> // Show skeleton when loading
-          ) : (
-            <MocksTable
-              mocksToRender={mocksToRender}
-              setMocksList={setMocksList}
-              selectedWorkspaceId={selectedWorkspaceId}
-            />
-          )}
-        </Suspense>
-      )}
+  <Suspense fallback={<MocksTableSkeleton />}>
+    {loading ? (
+      <MocksTableSkeleton /> // Show skeleton when loading
+    ) : (
+      //Render mocks if they exist in workspace otherwise let the user know.
+      mocksToRender.length ? (
+        <MocksTable
+          mocksToRender={mocksToRender}
+          setMocksList={setMocksList}
+          selectedWorkspaceId={selectedWorkspaceId}
+        />
+      ) : <div className={`${lusitana.className} w-full h-32 flex justify-center items-center font-bold`}>{workspaceName === "" ? <p>Select a Workspace</p> : <p>You have no mocks in this workspace.</p>}</div>
+    )}
+  </Suspense>
+)}
+
     </div>
   );
 }
