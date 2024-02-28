@@ -58,3 +58,10 @@ jobs:
             NEXT_PUBLIC_AZURE_AD_B2C_PRIMARY_USER_FLOW=${{ secrets.NEXT_PUBLIC_AZURE_AD_B2C_PRIMARY_USER_FLOW }}
             NEXT_PUBLIC_MOCKERY_BASEURL=${{ secrets.NEXT_PUBLIC_MOCKERY_BASEURL }} 
             NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
+
+      - name: Set Azure Web App Environment Variables
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az webapp config appsettings set --name mockery-web-pro-staging --resource-group mockery-staging --settings NEXT_PUBLIC_AZURE_AD_B2C_TENANT_NAME=${{ secrets.NEXT_PUBLIC_AZURE_AD_B2C_TENANT_NAME }} NEXT_PUBLIC_AZURE_AD_B2C_CLIENT_ID=${{ secrets.NEXT_PUBLIC_AZURE_AD_B2C_CLIENT_ID }} NEXT_PUBLIC_AZURE_AD_B2C_CLIENT_SECRET=${{ secrets.NEXT_PUBLIC_AZURE_AD_B2C_CLIENT_SECRET }} NEXT_PUBLIC_AZURE_AD_B2C_PRIMARY_USER_FLOW=${{ secrets.NEXT_PUBLIC_AZURE_AD_B2C_PRIMARY_USER_FLOW }} NEXT_PUBLIC_MOCKERY_BASEURL=${{ secrets.NEXT_PUBLIC_MOCKERY_BASEURL }} NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
