@@ -31,7 +31,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.ACR_ENDPOINT }}/mockerywebpro:latest
+          tags: |
+            ${{ secrets.ACR_ENDPOINT }}/mockerywebpro:${{ steps.random_tag.outputs.RANDOM_TAG }}
+
 
   deploy:
     name: Deploy to Azure Web App
