@@ -75,6 +75,7 @@ function WorkspaceForm({
           placeholder="Workspace Name"
           value={workspaceInput.name}
           onChange={handleInputChange}
+          maxLength={25}
         />
         <input
           name="description"
@@ -83,20 +84,21 @@ function WorkspaceForm({
           placeholder="Description"
           value={workspaceInput.description}
           onChange={handleInputChange}
+          maxLength={25}
         />
       </form>
       <div className="flex gap-2 m-2 justify-center">
         <button
           type="button"
           disabled={!workspaceInput.name || !workspaceInput.description}
-          className="py-1 px-2 rounded-md text-white bg-light-theme-green hover:bg-dark-theme-green disabled:opacity-50 disabled:cursor-not-allowed"
+          className="py-1 px-2 rounded-md text-white bg-blue-500 hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handleConfirm}
         >
           {mode === "edit" ? "Update" : "Create"}
         </button>
         <button
           type="button"
-          className="px-2 rounded-md text-black hover:bg-dark-theme-green hover:text-white"
+          className="px-2 rounded-md text-black  hover:text-red-400 hover:font-bold"
           onClick={handleCancel}
         >
           Cancel
