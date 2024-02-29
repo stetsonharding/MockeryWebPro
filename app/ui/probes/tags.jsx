@@ -23,6 +23,7 @@ export default function ProbeTags({ probesTag, setProbesTag, setProbesList }) {
    
         const probesPromise = await fetch(url, options);
         const probesData = await probesPromise.json();
+       if(probesPromise.ok)
         setProbesTag(probesData);
       } catch (error) {
         console.log(error.message);

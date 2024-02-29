@@ -35,7 +35,7 @@ export default function MocksTable({mocksToRender, setMocksList, selectedWorkspa
           </div>
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
-              <tr className={`${lusitana.className} `}>
+              <tr className={`${lusitana.className-700} `}>
                 <th scope="col" className={`${lusitana.className} ${headerClassName}`}>
                   Name
                 </th>
