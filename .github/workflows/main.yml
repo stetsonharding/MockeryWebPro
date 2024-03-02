@@ -47,7 +47,7 @@ jobs:
       - name: Docker Login to ACR
         run: docker login ${{ secrets.ACR_ENDPOINT }} -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }}
       - name: Pull Docker image
-        run: docker pull ${{ secrets.ACR_ENDPOINT }}/mockerywebpro:latest
+        run: docker pull ${{ secrets.ACR_ENDPOINT }}/mockerywebpro:${{ steps.random_tag.outputs.RANDOM_TAG }}
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
