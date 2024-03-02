@@ -23,6 +23,7 @@ export default function ProbeTags({ probesTag, setProbesTag, setProbesList }) {
    
         const probesPromise = await fetch(url, options);
         const probesData = await probesPromise.json();
+       if(probesPromise.ok)
         setProbesTag(probesData);
       } catch (error) {
         console.log(error.message);
@@ -50,7 +51,7 @@ export default function ProbeTags({ probesTag, setProbesTag, setProbesList }) {
       </label>
       <select id="tags" name="tags" className="w-64 rounded-md" onClick={handleSelectProbe}>
         <option value="all" defaultValue={"all"}>
-          {probesTag.length <= 0 ? "No probes to view" : "All Probes"}
+          {probesTag.length <= 0 ? "No Probe Tags Created" : "All Probes"}
         </option>
         {probesTag.length &&
           probesTag.map((probe) => {
