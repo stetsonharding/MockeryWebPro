@@ -12,6 +12,8 @@ jobs:
   build:
     name: Build container image
     runs-on: ubuntu-latest
+    outputs:
+      random_tag: ${{ steps.random_tag.outputs.RANDOM_TAG }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -34,7 +36,6 @@ jobs:
           tags: |
             ${{ secrets.ACR_ENDPOINT }}/mockerywebpro:${{ steps.random_tag.outputs.RANDOM_TAG }}
 
-
   deploy:
     name: Deploy to Azure Web App
     runs-on: ubuntu-latest
@@ -47,7 +48,7 @@ jobs:
       - name: Docker Login to ACR
         run: docker login ${{ secrets.ACR_ENDPOINT }} -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }}
       - name: Pull Docker image
-        run: docker pull ${{ secrets.ACR_ENDPOINT }}/mockerywebpro:${{ steps.random_tag.outputs.RANDOM_TAG }}
+        run: docker pull ${{ secrets.ACR_ENDPOINT }}/mockerywebpro:${{ needs.build.outputs.random_tag }}
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
