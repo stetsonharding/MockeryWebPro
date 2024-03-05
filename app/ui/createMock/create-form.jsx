@@ -9,6 +9,8 @@ import "@uiw/react-textarea-code-editor/dist.css";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
+import { createMock } from "@app/lib/data";
+
 export default function Form({workspaceId}) {
 
 
@@ -39,35 +41,35 @@ export default function Form({workspaceId}) {
 
 
   //Create Mock
-  const createMock = async (e) => {
-   e.preventDefault()
-  //Headers
-  const options = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(createMockInputs),
-  };
-  //API endpoint
-  const url = `/api/workspaces/${workspaceId}/mocks`;
-  try {
-    // let validJson = validateJSON(usersCreateMockData.mock.content);
-    //fetch API
-    const promise = await fetch(url, options);
-    const res = await promise.json();
-    if(res){
-     router.push(`/mocksDashboard?id=${workspaceId}`)
-    }
-  } catch (error) {
-   console.log(error)
-  }
-};
+//   const createMock = async (e) => {
+//    e.preventDefault()
+//   //Headers
+//   const options = {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     },
+//     body: JSON.stringify(createMockInputs),
+//   };
+//   //API endpoint
+//   const url = `/api/workspaces/${workspaceId}/mocks`;
+//   try {
+//     // let validJson = validateJSON(usersCreateMockData.mock.content);
+//     //fetch API
+//     const promise = await fetch(url, options);
+//     const res = await promise.json();
+//     if(res){
+//      router.push(`/mocksDashboard?id=${workspaceId}`)
+//     }
+//   } catch (error) {
+//    console.log(error)
+//   }
+// };
 
 
   return (
-    <form onSubmit={createMock}>
+    <form onSubmit={(e) => createMock(e, token, createMockInputs, workspaceId, router)}>
       <h1>Create Mock</h1>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Mock Name */}

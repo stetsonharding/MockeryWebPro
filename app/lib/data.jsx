@@ -1,4 +1,33 @@
-//Delete Mock
+//Crate Mock POST
+export const createMock = async (e, token, createMockInputs, workspaceId, router) => {
+  e.preventDefault()
+ //Headers
+ const options = {
+   method: "POST",
+   headers: {
+     "Content-Type": "application/json",
+     Authorization: `Bearer ${token}`,
+   },
+   body: JSON.stringify(createMockInputs),
+ };
+ //API endpoint
+ const url = `/api/workspaces/${workspaceId}/mocks`;
+ try {
+   // let validJson = validateJSON(usersCreateMockData.mock.content);
+   //fetch API
+   const promise = await fetch(url, options);
+   const res = await promise.json();
+   if(res){
+    router.push(`/mocksDashboard?id=${workspaceId}`)
+   }
+ } catch (error) {
+  console.log(error)
+ }
+};
+
+
+
+//Delete Mock POST
 export const deleteMock = async (mockId, token, setMocksList, workspaceId) => {
   const deleteConfirmation = confirm(
     "Are you sure you want to delete this mock?"
@@ -27,7 +56,8 @@ export const deleteMock = async (mockId, token, setMocksList, workspaceId) => {
   }
 };
 
-//fetch a single mock
+
+//fetch a single mock GET
 export const fetchUpdatedMock = async (token, workspaceId, id) => {
   // Headers
   const options = {

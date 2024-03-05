@@ -1,5 +1,5 @@
 import React from "react";
-import { UpdateMock, DeleteMock } from "./buttons";
+import { UpdateMock, DeleteMock, CloneMock } from "./buttons";
 import { useSession } from "next-auth/react";
 import { lusitana } from '@/app/ui/fonts';
 
@@ -26,8 +26,9 @@ export default function MocksTable({mocksToRender, setMocksList, selectedWorkspa
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div className="flex justify-end gap-2">
-                   <UpdateMock />
-                 <DeleteMock />
+                    <CloneMock id={mock.id} workspaceId={selectedWorkspaceId}/>
+                    <UpdateMock id={mock.id} workspaceId={selectedWorkspaceId} />
+                    <DeleteMock id={mock.id} token={session?.accessToken} setMocksList={setMocksList} selectedWorkspaceId={selectedWorkspaceId}/>
                   </div>
                 </div>
               </div>
@@ -87,6 +88,7 @@ export default function MocksTable({mocksToRender, setMocksList, selectedWorkspa
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
+                       <CloneMock id={mock.id} workspaceId={selectedWorkspaceId} />
                     <UpdateMock id={mock.id} workspaceId={selectedWorkspaceId} />
                     <DeleteMock id={mock.id} token={session?.accessToken} setMocksList={setMocksList} selectedWorkspaceId={selectedWorkspaceId}/>
                     </div>

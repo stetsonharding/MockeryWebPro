@@ -1,12 +1,10 @@
-import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, PlusIcon, TrashIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 
 import { deleteMock } from "@app/lib/data";
 
 import Link from "next/link";
 
 export function CreateMock({selectedWorkspaceId}) {
-
-
   return (
     <Link
     href={{
@@ -28,6 +26,18 @@ export function UpdateMock({id, workspaceId}) {
       className="rounded-md border p-2 hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />
+    </Link>
+  );
+}
+
+
+export function CloneMock({id, workspaceId}) {
+  return (
+    <Link
+      href={`/mocksDashboard/createMock/${id}/${workspaceId}/clone`}
+      className="rounded-md border p-2 hover:bg-gray-100"
+    >
+      <DocumentDuplicateIcon className="w-5" />
     </Link>
   );
 }

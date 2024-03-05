@@ -6,17 +6,18 @@ import Button from "../Button";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import "@uiw/react-textarea-code-editor/dist.css";
 
-import { fetchUpdatedMock } from "@app/lib/data";
+import { fetchUpdatedMock, createMock } from "@app/lib/data";
 import { useRouter } from "next/navigation";
 
 // import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-export default function Form({ id, workspaceId }) {
+export default function Form({ id, workspaceId, formTitle }) {
   const { data: session } = useSession();
   let router = useRouter();
   const token = session?.accessToken;
 
+  //Mock input values
   const [updatedMockInputs, setUpdatedMockInputs] = useState({
     name: "",
     host: "",
@@ -29,33 +30,35 @@ export default function Form({ id, workspaceId }) {
     statusCode: 200,
   });
 
-
-  
+  //Update feilds for edit/clone inputs
   const handleUpdatedInputs = (e) => {
     const { name, value } = e.target;
     setUpdatedMockInputs((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-  }
-  
-
+  };
 
   useEffect(() => {
     //Fetch selected mock that user would like to edit
     const fetchData = async () => {
       let data = await fetchUpdatedMock(token, workspaceId, id);
-      setUpdatedMockInputs(data);
+      //User is cloning a mock
+      if (formTitle === "Clone Mock") {
+        //Remove the users tag if cloning a mock.
+        data.tag = "";
+        setUpdatedMockInputs(data);
+      } else {
+        //user is editing a mock keep the same values.
+        setUpdatedMockInputs(data);
+      }
     };
     fetchData();
   }, []);
 
-
-
-
   //Function to edit Created Mock
   const editMock = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // Headers
     const options = {
       method: "PUT",
@@ -71,17 +74,15 @@ export default function Form({ id, workspaceId }) {
       //let validJSON = validateJSON(usersEditedMock.mock.content);
       const editPromise = await fetch(url, options);
       const editPromiseResult = await editPromise.json();
-router.push('/mocksDashboard')
+      router.push("/mocksDashboard");
     } catch (error) {
       console.log(error.message);
     }
   };
 
-
-
   return (
-    <form onSubmit={editMock}>
-      <h1>Edit Mock</h1>
+    <form onSubmit={formTitle !== "Clone Mock" ? editMock : (e) => createMock(e, token, updatedMockInputs, workspaceId, router)}>
+      <h1>{formTitle}</h1>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Mock Name */}
         <label htmlFor="name" className="block mb-2 text-sm font-medium">
@@ -218,7 +219,7 @@ router.push('/mocksDashboard')
         >
           Cancel
         </Link>
-        <Button type="submit">Edit Mock</Button>
+        <Button type="submit">{formTitle === "Clone Mock" ? "Clone Mock" : "Edit Mock"}</Button>
       </div>
     </form>
   );
