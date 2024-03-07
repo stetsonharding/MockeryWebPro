@@ -1,5 +1,5 @@
 //Crate Mock POST
-export const createMock = async (e, token, createMockInputs, workspaceId, router) => {
+export const createMock = async (e, token, createMockInputs, workspaceId, router, tag) => {
   e.preventDefault()
  //Headers
  const options = {
@@ -24,6 +24,15 @@ export const createMock = async (e, token, createMockInputs, workspaceId, router
   console.log(error)
  }
 };
+
+
+//Function to make sure no duplicate tags
+// const duplicateTags = (mockData, tag) => {
+//   console.log(mockData)
+// for(let mock of mockData) {
+//   if(mock.tag === tag) return console.log('dup tag')
+// }
+// }
 
 
 

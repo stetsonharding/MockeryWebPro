@@ -4,6 +4,8 @@ import { deleteMock } from "@app/lib/data";
 
 import Link from "next/link";
 
+import ToolTip from "../ToolTip";
+
 export function CreateMock({selectedWorkspaceId}) {
   return (
     <Link
@@ -21,38 +23,51 @@ export function CreateMock({selectedWorkspaceId}) {
 
 export function UpdateMock({id, workspaceId}) {
   return (
+    <ToolTip tooltip={"Edit"}>
+
     <Link
       href={`/mocksDashboard/createMock/${id}/${workspaceId}/edit`}
-      className="rounded-md border p-2 hover:bg-gray-100"
+      className="rounded-md border p-2 inline-block hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />
     </Link>
+    </ToolTip>
+
+   
   );
 }
 
 
 export function CloneMock({id, workspaceId}) {
   return (
-    <Link
-      href={`/mocksDashboard/createMock/${id}/${workspaceId}/clone`}
-      className="rounded-md border p-2 hover:bg-gray-100"
-    >
-      <DocumentDuplicateIcon className="w-5" />
-    </Link>
+   
+    <ToolTip tooltip="Clone">
+      <Link
+        href={`/mocksDashboard/createMock/${id}/${workspaceId}/clone`}
+        className="rounded-md border p-2 inline-block hover:bg-gray-100"
+      >
+        <DocumentDuplicateIcon className="w-5" />
+      </Link>
+    </ToolTip>
+
+   
   );
 }
 
 export function DeleteMock({ id, token, setMocksList, selectedWorkspaceId }) {
   return (
-    <>
-      <button className="rounded-md border p-2 hover:bg-gray-100">
-        <span className="sr-only">Delete</span>
+    
+       <ToolTip tooltip="Delete">
+
+      <button className="rounded-md border p-2 inline-block hover:bg-gray-100">
+
         <TrashIcon
           onClick={() => deleteMock(id, token, setMocksList, selectedWorkspaceId)}
           className="w-5"
         />
       </button>
-    </>
+       </ToolTip>
+    
   );
 }
 
