@@ -130,8 +130,9 @@ export default function Page() {
 
   return (
     <div className="w-full">
-      <div className="flex w-full items-center justify-between">
-        <h1 className={`text-2xl`}>Created Mocks</h1>
+      <div className="flex items-start flex-col">
+        <h1 className={`text-2xl  font-semibold  text-blue-500 p-1 `}>Created Mocks</h1>
+        <h1 className={`text-sm     p-1 `}>{workspaceName}</h1>
       </div>
       <div className="mt-4 flex items-center justify-between gap-3 md:mt-8">
         <SearchMocks

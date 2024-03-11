@@ -82,8 +82,8 @@ export default function Form({ id, workspaceId, formTitle }) {
 
   return (
     <form onSubmit={formTitle !== "Clone Mock" ? editMock : (e) => createMock(e, token, updatedMockInputs, workspaceId, router)}>
-      <h1>{formTitle}</h1>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
+      <h1 className="font-semibold text-xl text-blue-500 p-2 ">{formTitle}</h1>
+      <div className="rounded-md bg-gray-50 p-3 md:p-6">
         {/* Mock Name */}
         <label htmlFor="name" className="block mb-2 text-sm font-medium">
           Name

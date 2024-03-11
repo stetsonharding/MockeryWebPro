@@ -1,5 +1,5 @@
 import React from "react";
-import { UpdateMock, DeleteMock, CloneMock } from "./buttons";
+import { UpdateMock, DeleteMock, CloneMock, CopyHeader } from "./buttons";
 import { useSession } from "next-auth/react";
 import { lusitana } from "@/app/ui/fonts";
 
@@ -32,6 +32,7 @@ export default function MocksTable({
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div className="flex justify-end gap-2">
+                  <CopyHeader />
                     <CloneMock id={mock.id} workspaceId={selectedWorkspaceId} />
                     <UpdateMock
                       id={mock.id}
@@ -120,7 +121,7 @@ export default function MocksTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                  
+                  <CopyHeader />
 
                       <CloneMock
                         id={mock.id}

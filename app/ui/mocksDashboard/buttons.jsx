@@ -1,4 +1,4 @@
-import { PencilIcon, PlusIcon, TrashIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, PlusIcon, TrashIcon, DocumentDuplicateIcon, RectangleGroupIcon } from "@heroicons/react/24/outline";
 
 import { deleteMock } from "@app/lib/data";
 
@@ -38,6 +38,23 @@ export function UpdateMock({id, workspaceId}) {
 }
 
 
+export function CopyHeader() {
+  return (
+    <ToolTip tooltip={"Copy Header"}>
+
+    <button
+      className="rounded-md border p-2 inline-block hover:bg-gray-100"
+    >
+      <RectangleGroupIcon className="w-5" />
+    </button>
+    </ToolTip>
+
+   
+  );
+}
+
+
+
 export function CloneMock({id, workspaceId}) {
   return (
    
@@ -74,6 +91,7 @@ export function DeleteMock({ id, token, setMocksList, selectedWorkspaceId }) {
 export function ViewWorkspacesBtn({ setIsDropdownShown, isDropdownShown, workspaceName }) {
 
   return (
+    
     <div
       onClick={() => setIsDropdownShown(!isDropdownShown)}
       className="inline-flex w-52 justify-between items-center pl-2 rounded-md bg-white tracking-wide text-md  font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-200"
