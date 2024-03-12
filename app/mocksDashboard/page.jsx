@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import SearchMocks from "@app/ui/mocksDashboard/SearchMocks";
 import MocksTable from "@app/ui/mocksDashboard/table";
 import { CreateMock } from "@app/ui/mocksDashboard/buttons";
@@ -11,10 +11,12 @@ import { Suspense } from "react";
 import { MocksTableSkeleton } from "@app/ui/skeletons";
 import { lusitana } from '@/app/ui/fonts';
 
+import { useWorkspaceMocks } from "@app/context/workspaceMocksContext";
+
 export default function Page() {
   const router = useRouter();
   //State to stock list of mocks
-  const [mocksList, setMocksList] = useState([]);
+  // const [mocksList, setMocksList] = useState([]);
   //State for filtered mocks by search
   const [filteredMocks, setFilteredMocks] = useState([]);
   //State to store workspace names
@@ -28,6 +30,7 @@ export default function Page() {
 
   //user session
   const { data: session, status } = useSession();
+ const {setMocksList, mocksList} = useWorkspaceMocks();
 
   //Function to remove workspace's mocks and workspace name user has selected
   const deleteWorkspaceAndMocks = () => {
