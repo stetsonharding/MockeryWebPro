@@ -36,21 +36,21 @@ export default function Form({ id, workspaceId, formTitle }) {
   //all of the workspaces mocks from context
   const { mocksList } = useWorkspaceMocks();
 
-  //Function to make sure no duplicate tags
+  //Function to make sure no duplicate tags within a workspace when trying to clone a mock.
   const duplicateTags = async (mocksList, tag, e, token, updatedMockInputs, workspaceId) => {
     e.preventDefault();
-
+    //loop through mocks and check if users tag already exists
     for (let mock of mocksList) {
       if (mock.tag === tag) {
       setErrorMessage(
           "Duplicate tag names are not allowed. Please select a unique name and try again."
         );
         updatedMockInputs.tag = ""
-
         return;
       }
     }
 
+    //tag doesint exist, clone the mock with the new tag name
     setErrorMessage("");
    createMock(e, token, updatedMockInputs, workspaceId, router);
   

@@ -38,11 +38,13 @@ export function UpdateMock({id, workspaceId}) {
 }
 
 
-export function CopyHeader() {
+export function CopyHeader({setModalShown}) {
+  
   return (
     <ToolTip tooltip={"Copy Header"}>
 
     <button
+    onClick={() => setModalShown(true)}
       className="rounded-md border p-2 inline-block hover:bg-gray-100"
     >
       <RectangleGroupIcon className="w-5" />
