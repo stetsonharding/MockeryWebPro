@@ -40,9 +40,9 @@ export function UpdateMock({id, workspaceId}) {
 
  export function CopyHeader({setModalShown, mockId, setMockToCopyClipboard, workspaceId, token}) {
 
-let r = async () => {
-  setModalShown(true)
-  let res = await fetchUpdatedMock(token, workspaceId, mockId)
+let getMockToCopy = async () => {
+setModalShown(true)
+let res = await fetchUpdatedMock(token, workspaceId, mockId)
 setMockToCopyClipboard(res)
 
 }
@@ -54,7 +54,7 @@ setMockToCopyClipboard(res)
     <ToolTip tooltip={"Copy Header"}>
 
     <button
-    onClick={() => r()}
+    onClick={ getMockToCopy}
       className="rounded-md border p-2 inline-block hover:bg-gray-100"
     >
       <RectangleGroupIcon className="w-5" />

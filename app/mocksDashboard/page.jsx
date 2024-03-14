@@ -30,7 +30,7 @@ export default function Page() {
     //State for copy header modal
   const [modalShown, setModalShown] = useState(false)
     //State to set single mock user wants to copy to clipboard
-    const [mockToCopyClipboard, setMockToCopyClipboard] = useState()
+    const [mockToCopyClipboard, setMockToCopyClipboard] = useState("")
 
 
 
@@ -139,7 +139,7 @@ export default function Page() {
 
   return (
     <div className="w-full">
-      {modalShown &&  <CopyHeaderModal setModalShown={setModalShown} mockToCopyClipboard={mockToCopyClipboard}/>}
+      {modalShown &&  <CopyHeaderModal setModalShown={setModalShown} mockToCopyClipboard={mockToCopyClipboard} setMockToCopyClipboard={setMockToCopyClipboard}/>}
      
       <div className="flex items-start flex-col">
         <h1 className={`text-2xl  font-semibold  text-blue-500 p-1 `}>Created Mocks</h1>
