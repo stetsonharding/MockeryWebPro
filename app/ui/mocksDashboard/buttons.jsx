@@ -1,6 +1,6 @@
 import { PencilIcon, PlusIcon, TrashIcon, DocumentDuplicateIcon, RectangleGroupIcon } from "@heroicons/react/24/outline";
 
-import { deleteMock } from "@app/lib/data";
+import { deleteMock, fetchUpdatedMock } from "@app/lib/data";
 
 import Link from "next/link";
 
@@ -38,13 +38,23 @@ export function UpdateMock({id, workspaceId}) {
 }
 
 
-export function CopyHeader({setModalShown}) {
+ export function CopyHeader({setModalShown, mockId, setMockToCopyClipboard, workspaceId, token}) {
+
+let r = async () => {
+  setModalShown(true)
+  let res = await fetchUpdatedMock(token, workspaceId, mockId)
+setMockToCopyClipboard(res)
+
+}
+
+
+
   
   return (
     <ToolTip tooltip={"Copy Header"}>
 
     <button
-    onClick={() => setModalShown(true)}
+    onClick={() => r()}
       className="rounded-md border p-2 inline-block hover:bg-gray-100"
     >
       <RectangleGroupIcon className="w-5" />

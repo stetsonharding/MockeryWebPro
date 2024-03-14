@@ -8,6 +8,7 @@ export default function MocksTable({
   setMocksList,
   selectedWorkspaceId,
   setModalShown,
+  setMockToCopyClipboard
 }) {
   const { data: session } = useSession();
   const headerClassName = "px-5 py-5 sm:pl-6";
@@ -117,7 +118,7 @@ export default function MocksTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <CopyHeader setModalShown={setModalShown}  />
+                      <CopyHeader setModalShown={setModalShown} setMockToCopyClipboard={setMockToCopyClipboard} workspaceId={selectedWorkspaceId} mockId={mock.id} token={session?.accessToken} />
 
                       <CloneMock
                         id={mock.id}
