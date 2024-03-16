@@ -17,7 +17,7 @@ export default function Form() {
     })
   //user session
   const { data: session } = useSession();
-  const token = session?.accessToken;
+
 
  //Update profile Information with input feilds
  const handleProfileInputs = (e) => {
@@ -94,6 +94,7 @@ export default function Form() {
           // onChange={(e) => handleCreateMockInputs(e)}
         />
         {/* API */}
+        {/* API key goes here */}
         <label htmlFor="password" className="block mb-2 text-sm font-medium">
           API Key
         </label>
@@ -102,7 +103,7 @@ export default function Form() {
           type="text"
           id="password"
           name="password"
-          value={session?.accessToken}
+          value=""
           readOnly
         />
       </div>

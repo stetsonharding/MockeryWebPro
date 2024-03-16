@@ -1,12 +1,12 @@
-import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, PlusIcon, TrashIcon, DocumentDuplicateIcon, RectangleGroupIcon } from "@heroicons/react/24/outline";
 
-import { deleteMock } from "@app/lib/data";
+import { deleteMock, fetchUpdatedMock } from "@app/lib/data";
 
 import Link from "next/link";
 
+import ToolTip from "../ToolTip";
+
 export function CreateMock({selectedWorkspaceId}) {
-
-
   return (
     <Link
     href={{
@@ -23,32 +23,87 @@ export function CreateMock({selectedWorkspaceId}) {
 
 export function UpdateMock({id, workspaceId}) {
   return (
+    <ToolTip tooltip={"Edit"}>
+
     <Link
       href={`/mocksDashboard/createMock/${id}/${workspaceId}/edit`}
-      className="rounded-md border p-2 hover:bg-gray-100"
+      className="rounded-md border p-2 inline-block hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />
     </Link>
+    </ToolTip>
+
+   
+  );
+}
+
+
+ export function CopyHeader({setModalShown, mockId, setMockToCopyClipboard, workspaceId, token}) {
+
+let getMockToCopy = async () => {
+setModalShown(true)
+let res = await fetchUpdatedMock(token, workspaceId, mockId)
+setMockToCopyClipboard(res)
+
+}
+
+
+
+  
+  return (
+    <ToolTip tooltip={"Copy Header"}>
+
+    <button
+    onClick={ getMockToCopy}
+      className="rounded-md border p-2 inline-block hover:bg-gray-100"
+    >
+      <RectangleGroupIcon className="w-5" />
+    </button>
+    </ToolTip>
+
+   
+  );
+}
+
+
+
+export function CloneMock({id, workspaceId}) {
+  return (
+   
+    <ToolTip tooltip="Clone">
+      <Link
+        href={`/mocksDashboard/createMock/${id}/${workspaceId}/clone`}
+        className="rounded-md border p-2 inline-block hover:bg-gray-100"
+      >
+        <DocumentDuplicateIcon className="w-5" />
+      </Link>
+    </ToolTip>
+
+   
   );
 }
 
 export function DeleteMock({ id, token, setMocksList, selectedWorkspaceId }) {
   return (
-    <>
-      <button className="rounded-md border p-2 hover:bg-gray-100">
-        <span className="sr-only">Delete</span>
+    
+       <ToolTip tooltip="Delete">
+
+      <button className="rounded-md border p-2 inline-block hover:bg-gray-100">
+
         <TrashIcon
           onClick={() => deleteMock(id, token, setMocksList, selectedWorkspaceId)}
           className="w-5"
         />
       </button>
-    </>
+       </ToolTip>
+    
   );
 }
 
 export function ViewWorkspacesBtn({ setIsDropdownShown, isDropdownShown, workspaceName }) {
 
   return (
+    
     <div
       onClick={() => setIsDropdownShown(!isDropdownShown)}
       className="inline-flex w-52 justify-between items-center pl-2 rounded-md bg-white tracking-wide text-md  font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-200"

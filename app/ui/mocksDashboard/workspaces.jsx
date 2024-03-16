@@ -54,10 +54,10 @@ export function Workspaces({
     <div
       key={workspace.id}
       onClick={() => getWorkspaceMocksList(workspace)}
-      className="cursor-pointer pl-1 mb-1 hover:bg-gray-200 rounded-md"
+      className="cursor-pointer pl-1 mb-1 hover:bg-sky-100 rounded-md"
     >
       <div className="flex justify-between items-center px-2 py-2">
-        <p>{workspace.name}</p>
+        <p className="font-semibold">{workspace.name}</p>
         <button
           className="text-dark-theme-green font-bold hover:text-red-500"
           onClick={() => deleteWorkspace(workspace.id)}
@@ -66,7 +66,7 @@ export function Workspaces({
         </button>
       </div>
       <div className="flex justify-between px-2">
-        <span className="text-sm">{workspace.description}</span>
+        <span className="text-sm font-semibold">{workspace.description}</span>
         <span
           onClick={() => handleEditWorkspace(workspace)}
           className="cursor-pointer text-sm italic hover:underline"

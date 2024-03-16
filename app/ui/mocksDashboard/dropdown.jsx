@@ -55,13 +55,14 @@ export default function Dropdown({
 
   return (
     <div className="relative">
+      
       <ViewWorkspacesBtn
         setIsDropdownShown={setIsDropdownShown}
         isDropdownShown={isDropdownShown}
         workspaceName={workspaceName}
       />
       {isDropdownShown && (
-        <div ref={dropdownRef} className="absolute top-10 right-0 mt-2 w-80 rounded-sm bg-gray-50 shadow-md ring-black ring-opacity-5 focus:outline-none overflow-auto">
+        <div ref={dropdownRef} className=" z-10 absolute top-10 right-0 mt-2 w-80 rounded-sm bg-gray-50 shadow-md ring-black ring-opacity-5 focus:outline-none overflow-auto">
           <Workspaces
             workSpacesList={workSpacesList}
             setWorkSpacesList={setWorkSpacesList}
