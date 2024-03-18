@@ -6,17 +6,17 @@ import { CreateMock } from "@app/ui/mocksDashboard/buttons";
 import Dropdown from "@app/ui/mocksDashboard/dropdown";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { Suspense } from "react";
 import { MocksTableSkeleton } from "@app/ui/skeletons";
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana } from "@/app/ui/fonts";
 
 import CopyHeaderModal from "@app/ui/CopyHeaderModal";
 
 import { useWorkspaceMocks } from "@app/context/workspaceMocksContext";
 
 export default function Page() {
-  const router = useRouter();
+  //State from CONTEXT for workspace mocks
+  const { setMocksList, mocksList } = useWorkspaceMocks();
   //State for filtered mocks by search
   const [filteredMocks, setFilteredMocks] = useState([]);
   //State to store workspace names
@@ -27,16 +27,23 @@ export default function Page() {
   const [workspaceName, setWorkspaceName] = useState("");
   // Loading state
   const [loading, setLoading] = useState(true);
-    //State for copy header modal
-  const [modalShown, setModalShown] = useState(false)
-    //State to set single mock user wants to copy to clipboard
-    const [mockToCopyClipboard, setMockToCopyClipboard] = useState("")
-
-
+  //State for copy header modal
+  const [modalShown, setModalShown] = useState(false);
+  //State to set single mock user wants to copy to clipboard
+  const [mockToCopyClipboard, setMockToCopyClipboard] = useState({
+    ApiKey: "",
+    Endpoints: [
+      {
+        Host: "",
+        Method: "",
+        Endpoint: "",
+        Tag: "",
+      },
+    ],
+  });
 
   //user session
   const { data: session, status } = useSession();
- const {setMocksList, mocksList} = useWorkspaceMocks();
 
   //Function to remove workspace's mocks and workspace name user has selected
   const deleteWorkspaceAndMocks = () => {
@@ -139,10 +146,18 @@ export default function Page() {
 
   return (
     <div className="w-full">
-      {modalShown &&  <CopyHeaderModal setModalShown={setModalShown} mockToCopyClipboard={mockToCopyClipboard} setMockToCopyClipboard={setMockToCopyClipboard}/>}
-     
+      {modalShown && (
+        <CopyHeaderModal
+          setModalShown={setModalShown}
+          mockToCopyClipboard={mockToCopyClipboard}
+          setMockToCopyClipboard={setMockToCopyClipboard}
+        />
+      )}
+
       <div className="flex items-start flex-col">
-        <h1 className={`text-2xl  font-semibold  text-blue-500 p-1 `}>Created Mocks</h1>
+        <h1 className={`text-2xl  font-semibold  text-blue-500 p-1 `}>
+          Created Mocks
+        </h1>
         <h1 className={`text-sm     p-1 `}>{workspaceName}</h1>
       </div>
       <div className="mt-4 flex items-center justify-between gap-3 md:mt-8">
@@ -163,24 +178,31 @@ export default function Page() {
       </div>
 
       {status === "authenticated" && (
-  <Suspense fallback={<MocksTableSkeleton />}>
-    {loading ? (
-      <MocksTableSkeleton /> // Show skeleton when loading
-    ) : (
-      //Render mocks if they exist in workspace otherwise let the user know.
-      mocksToRender.length ? (
-        <MocksTable
-          mocksToRender={mocksToRender}
-          setMocksList={setMocksList}
-          selectedWorkspaceId={selectedWorkspaceId}
-          setModalShown={setModalShown}
-          setMockToCopyClipboard={setMockToCopyClipboard}
-        />
-      ) : <div className={`${lusitana.className} w-full h-32 flex justify-center items-center font-bold`}>{workspaceName === "" ? <p>Select a Workspace</p> : <p>You have no mocks in this workspace.</p>}</div>
-    )}
-  </Suspense>
-)}
-
+        <Suspense fallback={<MocksTableSkeleton />}>
+          {loading ? (
+            <MocksTableSkeleton /> // Show skeleton when loading
+          ) : //Render mocks if they exist in workspace otherwise let the user know.
+          mocksToRender.length ? (
+            <MocksTable
+              mocksToRender={mocksToRender}
+              setMocksList={setMocksList}
+              selectedWorkspaceId={selectedWorkspaceId}
+              setModalShown={setModalShown}
+              setMockToCopyClipboard={setMockToCopyClipboard}
+            />
+          ) : (
+            <div
+              className={`${lusitana.className} w-full h-32 flex justify-center items-center font-bold`}
+            >
+              {workspaceName === "" ? (
+                <p>Select a Workspace</p>
+              ) : (
+                <p>You have no mocks in this workspace.</p>
+              )}
+            </div>
+          )}
+        </Suspense>
+      )}
     </div>
   );
 }
