@@ -1,5 +1,6 @@
 "use client";
 import HeroHeadline from "./ui/home/components/HeroHeadline";
+import KeyFeatures from "./ui/home/components/KeyFeatures";
 import SectionTitle from "./ui/home/components/SectionTitle";
 // import Image from "next/image";
 import MockeryLogo from "./ui/mockery-logo";
@@ -33,6 +34,9 @@ export default function Page() {
       {/* == */}
       </div>
       <SectionTitle title="Key Features"/>
+      <KeyFeatures />
+      <SectionTitle title="How it Works"/>
+      
     </main>
   );
 }
