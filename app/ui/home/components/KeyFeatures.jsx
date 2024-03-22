@@ -7,7 +7,7 @@ function KeyFeatures(props) {
     <div
       className={clsx("flex flex-col md:flex-row", {
         "md:flex-row-reverse": props.even === "yes",
-        "bg-gray-200": props.even === "yes"
+        "bg-gray-100": props.even === "yes"
       })}
     >
       {/* Image and title */}
