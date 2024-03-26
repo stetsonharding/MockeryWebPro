@@ -53,7 +53,7 @@
 }
 
 .black_btn {
-  @apply rounded-full border border-black bg-white py-1.5 px-5 text-black transition-all hover:bg-light-theme-green hover:text-white ;
+  @apply rounded-full border border-black bg-white py-1.5 px-5 text-black transition-all hover:text-white ;
 }
 
 .outline_btn {
@@ -81,9 +81,9 @@
 }
 
 /* Nav Component */
-.logo_text {
+/* .logo_text {
   @apply max-sm:hidden font-satoshi font-semibold text-xl text-white tracking-wide hover:text-light-theme-green;
-}
+} */
 
 .dropdown {
   @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end;

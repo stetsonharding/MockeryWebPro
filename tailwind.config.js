@@ -23,9 +23,8 @@ module.exports = {
         FredokaOne: ['Fredoka One', 'sans-serif']
       },
       colors: {
-        'primary-orange': '#FF5722',
-        'dark-theme-green': '#183d3d',
-        'light-theme-green': '#5c8374',
+        'home-blue': '#3b82f6',
+        'home-orange': '#ff7125'
       }
     },
   },
