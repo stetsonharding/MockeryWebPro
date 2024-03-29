@@ -38,9 +38,9 @@ const initialNodes = [
     position: { x: 400, y: 0 },
     data: {
       label: `{
-      "id": "59d27f1e-c34d-4dfa-881e-c6ee463d3e3e",
-      "apiKey": "API key generated",
-      "workspaceId": "1151edf4-c7b6-4984-8747-69ee5796dc1e",
+      "id": "1",
+      "apiKey": "*************",
+      "workspaceId": "**************",
       "createdAt": "0001-01-01T00:00:00",
       "name": "Game Testing",
       "description": "Testing a new game",
@@ -48,7 +48,7 @@ const initialNodes = [
       "host": "newGames.io",
       "method": "GET",
       "endpoint": "allGames/new",
-      "content": "{}",
+      "content": "{{game: test}}",
       "contentType": "application/json",
       "statusCode": 200
     }`,
@@ -84,22 +84,25 @@ const initialNodes = [
     position: { x: 530, y: 690 },
     data: { label: "Mockery Service" },
     style: {
-      background: 'skyblue', // Change background color to light blue
-      color: '#000', 
-      borderRadius: '50%', // Make it oval shaped by setting borderRadius to 50%
-      width: 350, 
-      height: 250, 
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center',
-      fontWeight: 'bold',
-      fontSize:'20px'
+      background: "skyblue", // Change background color to light blue
+      color: "#000",
+      borderRadius: "50%", // Make it oval shaped by setting borderRadius to 50%
+      width: 350,
+      height: 250,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontWeight: "bold",
+      fontSize: "20px",
     },
   },
   {
     id: "6",
     position: { x: 720, y: 400 },
-    data: { label: "The generated mock is seamlessly uploaded to Mockery and securely stored within our database for the user.  " },
+    data: {
+      label:
+        "The generated mock is seamlessly uploaded to Mockery and securely stored within our database for the user.  ",
+    },
     style: {
       background: "orange",
       color: "#000",
@@ -169,7 +172,10 @@ const initialNodes = [
   {
     id: "11",
     position: { x: -300, y: 710 },
-    data: { label: "Client sends X-Mock header with JSON payload that describes the endpoints that should be mocked." },
+    data: {
+      label:
+        "Client sends X-Mock header with JSON payload that describes the endpoints that should be mocked.",
+    },
     style: {
       background: "orange",
       color: "#000",
@@ -183,11 +189,14 @@ const initialNodes = [
   {
     id: "12",
     position: { x: 80, y: 780 },
-    data: { label: "Client transmits  header containing mock selection criteria. Our middleware then utilizes these headers to match them with the appropriate endpoint, subsequently invoking Mockery to procure the corresponding mock data." },
+    data: {
+      label:
+        "Client transmits  header containing mock selection criteria. Our middleware then utilizes these headers to match them with the appropriate endpoint, subsequently invoking Mockery to procure the corresponding mock data.",
+    },
     style: {
       background: "orange",
       color: "#000",
-      width: 220,
+      width: 230,
       height: 220,
       display: "flex",
       alignItems: "center",
@@ -197,11 +206,16 @@ const initialNodes = [
   {
     id: "13",
     position: { x: -200, y: 980 },
-    data: { label: "CLIENT: {ApiKey:1814811a-ada0-4efc-9536-885a5dfd5ae7,Endpoints:[{Host:Created Mock Edited,Method:PATCH,Endpoint:Created Mock Edited,Tag:Edited Mocks Tag}]}"},
+
+    data: {
+      label:
+        '{"ApiKey":"**********************","Endpoints":[{"Host":"mocktester.com","Method":"GET","Endpoint":"testing/mocks","Tag":"V1"}]}',
+    },
+
     style: {
       background: "blue",
       color: "#fff",
-      width: 360,
+      width: 458,
       height: 260,
       display: "flex",
       alignItems: "center",
@@ -218,8 +232,6 @@ const initialEdges = [
   { id: "e2-3", source: "9", target: "5", animated: true },
   { id: "e2-3", source: "11", target: "12", animated: true },
   { id: "e2-3", source: "13", target: "8", animated: true },
- 
- 
 ];
 
 export default function FlowChart() {
@@ -227,17 +239,19 @@ export default function FlowChart() {
     <div
       style={{
         width: "100vw",
-        height: "100vh",
-       display:'flex',
-       justifyContent: 'center',
-       alignItems: 'center'
+        height: "75vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
-      <ReactFlow nodes={initialNodes} edges={initialEdges}  
-   
-   zoom={.5}
-      maxZoom={1}
-      minZoom={.5}    />
+      <ReactFlow
+        nodes={initialNodes}
+        edges={initialEdges}
+        zoom={0.5}
+        maxZoom={1}
+        minZoom={0.5}
+      />
     </div>
   );
 }
