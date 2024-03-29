@@ -8,6 +8,7 @@ import MockeryLogo from "./ui/mockery-logo";
 import FlowChart from "./ui/home/components/Node.Component";
 
 import { signIn } from "next-auth/react";
+import Footer from "./ui/home/components/Footer";
 
 export default function Page() {
   return (
@@ -42,8 +43,9 @@ export default function Page() {
       <KeyFeatures even="yes" imgSrc="/assets/icons/DataNeeded.png" imageTitle="Data when you need it" featureDescription="Services that integrate with Mockery utilize the Mockery APIs to seamlessly fetch tailored mock data for precise endpoints."/>
       <SectionTitle title="How it Works"/>
       <FlowChart />
-    
       
+    
+  <Footer />
     </main>
   );
 }
