@@ -5,7 +5,10 @@ import SectionTitle from "./ui/home/components/SectionTitle";
 // import Image from "next/image";
 import MockeryLogo from "./ui/mockery-logo";
 
+import FlowChart from "./ui/home/components/Node.Component";
+
 import { signIn } from "next-auth/react";
+import Footer from "./ui/home/components/Footer";
 
 export default function Page() {
   return (
@@ -39,7 +42,10 @@ export default function Page() {
       <KeyFeatures imgSrc="/assets/icons/SendHeader.png" imageTitle="Send Header to Mockery Hub" featureDescription="Clients simply sends over header information to Mockery specifying the endpoints and tags they need, and voilà, the mock data tailored to their requirements is promptly returned."/>
       <KeyFeatures even="yes" imgSrc="/assets/icons/DataNeeded.png" imageTitle="Data when you need it" featureDescription="Services that integrate with Mockery utilize the Mockery APIs to seamlessly fetch tailored mock data for precise endpoints."/>
       <SectionTitle title="How it Works"/>
+      <FlowChart />
       
+    
+  <Footer />
     </main>
   );
 }
