@@ -13,7 +13,7 @@ import Footer from "./ui/home/components/Footer";
 export default function Page() {
   return (
     <main className="h-screen ">
-      <div className=" h-fit bg-home-blue md:h-1/2">
+      <div className=" h-[550px] bg-home-blue ">
         {/* Logo & login btn */}
         <div className="flex justify-between items-start p-2 md:p-12">
           <MockeryLogo />
