@@ -130,11 +130,11 @@ const initialNodes = [
   {
     id: "8",
     position: { x: 440, y: 1110 },
-    data: { label: "Headers" },
+    data: { label: "Middleware" },
     style: {
       background: "blue",
       color: "#fff",
-      width: 50,
+      width: 70,
       height: 110,
       display: "flex",
       alignItems: "center",
