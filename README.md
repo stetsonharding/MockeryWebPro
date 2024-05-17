@@ -1,5 +1,5 @@
 ## Local Deployment
-These environment variables are required for local development and are defined in `.env.local` file.
+These environment variables are required for local development and are defined in `.env.local` file
 
 - NODE_ENV=development
 - NEXT_PUBLIC_API_KEY=<api key>
